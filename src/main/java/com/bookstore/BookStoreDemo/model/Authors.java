@@ -1,6 +1,5 @@
 package com.bookstore.BookStoreDemo.model;
 
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,15 +10,15 @@ public class Authors {
     
     @Id
     @GeneratedValue
-    @Column(name = "AuthorID")
+    @Column(name = "id")
     private Integer authorId;
-    @Column(name = "First name")
+    @Column(name = "firstName")
     private String fname;
-    @Column(name = "Last name")
+    @Column(name = "lastName")
     private String lname;
-    @Column(name = "Biography")
+    @Column(name = "biography")
     private String bio;
-    @Column(name = "Publisher")
+    @Column(name = "publisher")
     private String publisher;
     
     public Authors() {

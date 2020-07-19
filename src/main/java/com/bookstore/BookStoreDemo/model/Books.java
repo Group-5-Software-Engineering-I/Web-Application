@@ -1,6 +1,5 @@
 package com.bookstore.BookStoreDemo.model;
 
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,23 +8,23 @@ import javax.persistence.Id;
 public class Books {
     
     @Id
-    @Column(name = "ISBN")
+    @Column(name = "isbn")
     private Long isbn;
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
-    @Column(name = "Description")
+    @Column(name = "description")
     private String description;
-    @Column(name = "Price")
+    @Column(name = "price")
     private double price;
-    @Column(name = "Author")
+    @Column(name = "author")
     private String author;
-    @Column(name = "Genre")
+    @Column(name = "genre")
     private String genre;
-    @Column(name = "Publisher")
+    @Column(name = "publisher")
     private String publisher;
-    @Column(name = "Year")
+    @Column(name = "year")
     private int year;
-    @Column(name = "Sold")
+    @Column(name = "soldCopy")
     private int sold;
     
     public Books() {

@@ -1,5 +1,6 @@
 package com.bookstore.BookStoreDemo.model;
 
+import java.math.BigInteger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ public class Users {
     @Column(name = "id")
     private Integer userId;
     @Column(name = "cardNumber")
-    private Integer cardNumber;
+    private BigInteger cardNumber;
     @Column(name = "securityCode")
     private Integer securityCode;
     @Column(name = "expirationDate")
@@ -50,11 +51,11 @@ public class Users {
         this.userId = userId;
     }
 
-    public Integer getCardNumber() {
+    public BigInteger getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(Integer cardNumber) {
+    public void setCardNumber(BigInteger cardNumber) {
         this.cardNumber = cardNumber;
     }
 
