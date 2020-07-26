@@ -23,7 +23,7 @@ public class Books {
     @Column(name = "year")
     private int year;
     @Column(name = "soldCopy")
-    private int sold;
+    private long sold;
     
     public Books() {
         
@@ -61,7 +61,7 @@ public class Books {
         return year;
     }
 
-    public int getSold() {
+    public long getSold() {
         return sold;
     }
 
