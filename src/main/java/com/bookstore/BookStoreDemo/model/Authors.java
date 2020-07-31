@@ -1,68 +1,73 @@
 package com.bookstore.BookStoreDemo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
+import javax.persistence.*;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@IdClass(AuthorID.class)
 public class Authors {
-    
+   
     @Id
-    @GeneratedValue
-    @Column(name = "id")
-    private Integer authorId;
     @Column(name = "firstName")
-    private String fname;
+    private String firstName;
+    @Id
     @Column(name = "lastName")
-    private String lname;
+    private String lastName;
     @Column(name = "biography")
-    private String bio;
+    private String biography;
     @Column(name = "publisher")
     private String publisher;
-    
+    @JsonIgnore
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Books> books;
+   
+
     public Authors() {
         
     }
 
-    public Integer getId() {
-        return authorId;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getFname() {
-        return fname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public String getLname() {
-        return lname;
+    public List<Books> getBooks() {
+        return books;
     }
-
-    public String getBio() {
-        return bio;
+  
+    public String getBiography() {
+        return biography;
     }
 
     public String getPublisher() {
         return publisher;
     }
 
-    public void setId(Integer authorId) {
-        this.authorId = authorId;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
+    public void setBiography(String biography) {
+        this.biography = biography;
     }
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
-    
+  
+    public void setBooks(List<Books> books) {
+        this.books = books;
+    }
 }
+

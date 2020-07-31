@@ -1,15 +1,17 @@
 package com.bookstore.BookStoreDemo.resource;
 
+import com.bookstore.BookStoreDemo.model.AuthorID;
 import com.bookstore.BookStoreDemo.model.Authors;
+import com.bookstore.BookStoreDemo.model.Books;
 import com.bookstore.BookStoreDemo.repository.AuthorsRepository;
-import exceptions.NotFoundException;
 import java.util.List;
 import java.util.Optional;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/greektext/authors")
+@RequestMapping(value = "/geektext/authors")
 public class AuthorsResource {
     
     @Autowired
@@ -20,32 +22,39 @@ public class AuthorsResource {
         return authorsrepo.findAll();
     }
     
-    @GetMapping("/{id}")
-    public Authors getById(@PathVariable int id) {
-        return authorsrepo.findById(id).orElseThrow(() -> new NotFoundException("Author with id " + id + " is not found!"));
+    @GetMapping(value = "/find-their-books")
+    public List<Books> getAll(@RequestBody final Authors author) throws NotFoundException {
+       AuthorID name = new AuthorID(author.getFirstName(), author.getLastName());
+       Optional<Authors> result = authorsrepo.findById(name);
+       if (result.isEmpty()) {
+           throw new NotFoundException("This author does not exist!");
+       }
+       return result.get().getBooks();
     }
     
     @PostMapping(value = "/create")
-    public List<Authors> persist(@RequestBody final Authors author) {
-        authorsrepo.save(author);
-        return authorsrepo.findAll();
+    public Authors add(@RequestBody final Authors author) {
+       author.setFirstName(author.getFirstName());
+       author.setLastName(author.getLastName());
+       return authorsrepo.save(author);
     }
     
     @PutMapping(value = "/update")
     public String update(@RequestBody final Authors author) {
+        author.setFirstName(author.getFirstName());
+        author.setLastName(author.getLastName());
         authorsrepo.save(author);
-        return "Author is updated!";
+        return "Author " + author.getFirstName() + " " + author.getLastName() + " is updated!";
     }
     
-    @DeleteMapping(value = "/delete/{id}")
-    public String delete(@PathVariable int id) {
-        Optional<Authors> author = authorsrepo.findById(id);
-        if(author.isPresent()) {
-            authorsrepo.delete(author.get());
-            return "Author with id " + id + " is deleted!";
-        }
-        else {
-            throw new NotFoundException("Author with id " + id + " does not exist!");
-        }
+    @DeleteMapping(value = "/delete")
+    public String delete(@RequestBody final Authors author) throws NotFoundException {
+       AuthorID name = new AuthorID(author.getFirstName(), author.getLastName());
+       Optional<Authors> result = authorsrepo.findById(name);
+       if (result.isEmpty()) {
+           throw new NotFoundException("This author does not exist!");
+       }
+       authorsrepo.delete(result.get());
+       return "Author " + author.getFirstName() + " " + author.getLastName() + " is deleted!";
     }
 }

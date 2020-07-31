@@ -1,21 +1,27 @@
 package com.bookstore.BookStoreDemo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Books {
     
     @Id
     @Column(name = "isbn")
     private Long isbn;
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
     @Column(name = "description")
     private String description;
     @Column(name = "price")
     private double price;
-    @Column(name = "author")
-    private String author;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+        @JoinColumn(name = "firstName", referencedColumnName = "firstName", nullable = false),
+        @JoinColumn(name = "lastName", referencedColumnName = "lastName", nullable = false)        
+        })
+    Authors author;
     @Column(name = "genre")
     private String genre;
     @Column(name = "publisher")
@@ -23,7 +29,7 @@ public class Books {
     @Column(name = "year")
     private int year;
     @Column(name = "soldCopy")
-    private long sold;
+    private long soldCopy;
     
     public Books() {
         
@@ -33,8 +39,8 @@ public class Books {
         return isbn;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public String getDescription() {
@@ -44,11 +50,11 @@ public class Books {
     public double getPrice() {
         return price;
     }
-
-    public String getAuthor() {
+    
+    public Authors getAuthor() {
         return author;
     }
-
+    
     public String getGenre() {
         return genre;
     }
@@ -61,16 +67,16 @@ public class Books {
         return year;
     }
 
-    public long getSold() {
-        return sold;
+    public long getSoldCopy() {
+        return soldCopy;
     }
 
     public void setIsbn(Long isbn) {
         this.isbn = isbn;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setDescription(String description) {
@@ -80,11 +86,11 @@ public class Books {
     public void setPrice(double price) {
         this.price = price;
     }
-
-    public void setAuthor(String author) {
+   
+    public void setAuthor(Authors author) {
         this.author = author;
     }
-
+    
     public void setGenre(String genre) {
         this.genre = genre;
     }
@@ -97,8 +103,8 @@ public class Books {
         this.year = year;
     }
 
-    public void setSold(int sold) {
-        this.sold = sold;
+    public void setSoldCopy(int soldCopy) {
+        this.soldCopy = soldCopy;
     }
     
     
