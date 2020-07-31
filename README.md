@@ -1,4 +1,4 @@
-# Greek Text
+# Geek Text
 CEN4010 Software Engineering I Project: An online web application bookstore
 # Get Started
 Updating.....
