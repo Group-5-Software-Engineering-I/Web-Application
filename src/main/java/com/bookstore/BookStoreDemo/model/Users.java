@@ -1,5 +1,6 @@
 package com.bookstore.BookStoreDemo.model;
 
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +18,16 @@ public class Users {
     @Column(name = "email")
     private String email;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comment) {
+        this.comments = comment;
+    }
     //For Deserialization
     public Users() {}
 

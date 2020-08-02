@@ -1,6 +1,7 @@
 package com.bookstore.BookStoreDemo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -30,6 +31,17 @@ public class Books {
     private int year;
     @Column(name = "soldCopy")
     private long soldCopy;
+    
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comment) {
+        this.comments = comment;
+    }
     
     public Books() {
         
