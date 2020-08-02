@@ -110,6 +110,6 @@ public class Books {
     public void setSoldCopy(int soldCopy) {
         this.soldCopy = soldCopy;
     }
-
-
+    
+    
 }

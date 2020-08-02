@@ -38,6 +38,20 @@ public class BooksResource {
         return result.get();
     }
 
+    @GetMapping(value = "/genre/{genre}")
+    public List<Books> getByGenre(@PathVariable String genre) {
+        return booksrepo.findByGenre(genre);
+    }
+
+
+    @GetMapping(value = "/sold")
+    public List<Books> getTop() { return booksrepo.findTop10ByOrderBySoldCopyDesc();
+    }
+
+    @GetMapping(value = "/browse/{limit}")
+    public List<Books> getCertain(@PathVariable Integer limit) {return booksrepo.findOrderedByPriceLimitedTo(limit);
+    }
+
     //Creates a New Book
     @PostMapping("/books")
     public Books add(@RequestBody final Books book) throws NotFoundException {
