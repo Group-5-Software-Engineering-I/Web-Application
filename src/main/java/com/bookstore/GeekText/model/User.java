@@ -1,15 +1,24 @@
-package com.bookstore.BookStoreDemo.model;
+/*
+    This class belongs to the Profile Management Feature where Users
+    can create and maintain their profiles rather than enter in their
+    information each time they order
+ */
+package com.bookstore.GeekText.model;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-public class Users {
+@Table(name = "Users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class User {
 
     @Id
-    @Column(name = "username")
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "name")
     private String name;
@@ -18,23 +27,19 @@ public class Users {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CreditCard> creditCards;
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comment) {
-        this.comments = comment;
-    }
     //For Deserialization
-    public Users() {}
+    public User() {
+    }
 
-    public Users(String username) {
+    //Constructor
+    public User(String username) {
         this.username = username;
     }
 
+    //Getters and Setters
     public String getUsername() {
         return username;
     }
@@ -74,4 +79,13 @@ public class Users {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public List<CreditCard> getCreditCard() {
+        return creditCards;
+    }
+
+    public void setCreditCard(List<CreditCard> creditCard) {
+        this.creditCards = creditCard;
+    }
+
 }

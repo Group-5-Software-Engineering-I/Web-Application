@@ -1,7 +1,6 @@
-package com.bookstore.BookStoreDemo.model;
+package com.bookstore.GeekText.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -9,20 +8,15 @@ import javax.persistence.*;
 public class Books {
     
     @Id
-    @Column(name = "isbn")
+    @GeneratedValue
+    @Column(name = "isbn", nullable = false, unique = true)
     private Long isbn;
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
     @Column(name = "description")
     private String description;
     @Column(name = "price")
     private double price;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-        @JoinColumn(name = "firstName", referencedColumnName = "firstName", nullable = false),
-        @JoinColumn(name = "lastName", referencedColumnName = "lastName", nullable = false)        
-        })
-    Authors author;
     @Column(name = "genre")
     private String genre;
     @Column(name = "publisher")
@@ -31,22 +25,20 @@ public class Books {
     private int year;
     @Column(name = "soldCopy")
     private long soldCopy;
-    
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    private List<Comment> comments;
 
-    public List<Comment> getComments() {
-        return comments;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+        @JoinColumn(name = "firstName", referencedColumnName = "firstName", nullable = false),
+        @JoinColumn(name = "lastName", referencedColumnName = "lastName", nullable = false)
+        })
+    Authors author;
 
-    public void setComments(List<Comment> comment) {
-        this.comments = comment;
-    }
-    
+    //Constructor
     public Books() {
-        
     }
 
+
+    //Getters and Setters
     public Long getIsbn() {
         return isbn;
     }
@@ -118,6 +110,6 @@ public class Books {
     public void setSoldCopy(int soldCopy) {
         this.soldCopy = soldCopy;
     }
-    
-    
+
+
 }

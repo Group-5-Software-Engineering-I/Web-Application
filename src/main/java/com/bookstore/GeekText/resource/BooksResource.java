@@ -1,18 +1,19 @@
-package com.bookstore.BookStoreDemo.resource;
+package com.bookstore.GeekText.resource;
 
-import com.bookstore.BookStoreDemo.model.AuthorID;
-import com.bookstore.BookStoreDemo.model.Authors;
-import com.bookstore.BookStoreDemo.model.Books;
-import com.bookstore.BookStoreDemo.repository.AuthorsRepository;
-import com.bookstore.BookStoreDemo.repository.BooksRepository;
 import java.util.List;
 import java.util.Optional;
+
+import com.bookstore.GeekText.model.AuthorID;
+import com.bookstore.GeekText.model.Authors;
+import com.bookstore.GeekText.model.Books;
+import com.bookstore.GeekText.repository.AuthorsRepository;
+import com.bookstore.GeekText.repository.BooksRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/geektext/books")
+@RequestMapping(value = "/geektext")
 public class BooksResource {
     
     @Autowired
@@ -20,13 +21,15 @@ public class BooksResource {
     
     @Autowired
     AuthorsRepository authorsrepo;
-    
-    @GetMapping("/all")
+
+    //Displays a List of All Books on Database
+    @GetMapping("/books")
     public List<Books> getAll() {
         return booksrepo.findAll();
     }
-    
-    @GetMapping("/{isbn}")
+
+    //Displays a List of Books by ISBN (primary key of Books class)
+    @GetMapping("/books/{isbn}")
     public Books getById(@PathVariable Long isbn) throws NotFoundException {
         Optional<Books> result = booksrepo.findById(isbn);
         if (result.isEmpty()) {
@@ -35,7 +38,8 @@ public class BooksResource {
         return result.get();
     }
 
-    @PostMapping(value = "/create")
+    //Creates a New Book
+    @PostMapping("/books")
     public Books add(@RequestBody final Books book) throws NotFoundException {
         Authors author = book.getAuthor();
         AuthorID name = new AuthorID(author.getFirstName(), author.getLastName());
@@ -43,19 +47,22 @@ public class BooksResource {
         if (result.isEmpty()) {
             throw new NotFoundException("Author of this book has not been created. Create author first, then this book!");
         }
+
         result.get().getBooks().add(book);
         book.setAuthor(result.get());
         authorsrepo.save(result.get());
         return booksrepo.save(book);
     }
-    
-    @PutMapping(value = "/update")
+
+    //Updates a Current Book
+    @PutMapping(value = "/books")
     public String update(@RequestBody final Books book) {
         booksrepo.save(book);
         return "Book with ISBN " + book.getIsbn() + " is updated!";
     }
-    
-    @DeleteMapping(value = "/delete/{isbn}")
+
+    //Deletes a Book by ISBN
+    @DeleteMapping(value = "/books/{isbn}")
     public String delete(@PathVariable Long isbn) throws NotFoundException {
         Optional<Books> result = booksrepo.findById(isbn);
         if(result.isEmpty()) {

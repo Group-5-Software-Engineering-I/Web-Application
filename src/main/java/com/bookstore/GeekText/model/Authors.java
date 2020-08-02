@@ -1,4 +1,4 @@
-package com.bookstore.BookStoreDemo.model;
+package com.bookstore.GeekText.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,15 +21,16 @@ public class Authors {
     private String biography;
     @Column(name = "publisher")
     private String publisher;
+
     @JsonIgnore
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Books> books;
    
-
+    //Constructor
     public Authors() {
-        
     }
 
+    //Getters and Setters
     public String getFirstName() {
         return firstName;
     }

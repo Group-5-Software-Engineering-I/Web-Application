@@ -1,5 +1,5 @@
 
-package com.bookstore.BookStoreDemo.model;
+package com.bookstore.GeekText.model;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,15 +11,18 @@ public class AuthorID implements Serializable {
     private String firstName;
     private String lastName;
 
+    //Constructor
     public AuthorID() {
         
     }
-    
+
+    //Constructor
     public AuthorID(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
+    //Getters and Setters
     public String getFirstName() {
         return firstName;
     }
